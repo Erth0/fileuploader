@@ -34,7 +34,7 @@ class FileUpload extends Connection
      *
      * @return void
      */
-    public function uploadFile ()
+    protected function uploadFile ()
     {
         if ($this->exists($this->file['tmp_name'])) {
             if ($this->validator->validateFile($this->file)) {
@@ -50,7 +50,7 @@ class FileUpload extends Connection
      * @param string $fileName
      * @return string
      */
-    public function generateFileName ($fileName)
+    private function generateFileName ($fileName)
     {
         return time() . '-' . $fileName;
     }
@@ -61,7 +61,7 @@ class FileUpload extends Connection
      * @param string $fileName
      * @return void
      */
-    public function insertFileIntoDatabase ($fileName)
+    private function insertFileIntoDatabase ($fileName)
     {
         $result = $this->query("INSERT INTO images(file_path, created_at, updated_at) VALUES('$fileName', NOW(), NOW())");
     }
@@ -72,7 +72,7 @@ class FileUpload extends Connection
      * @param string $filePath
      * @return boolean
      */
-    public function exists ($filePath)
+    private function exists ($filePath)
     {
         if (file_exists($filePath)) {
             return true;

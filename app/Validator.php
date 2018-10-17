@@ -30,7 +30,7 @@ class Validator
      * @param array $file
      * @return void
      */
-    public function validateFile ($file)
+    protected function validateFile ($file)
     {
         if (!in_array($this->getFileExtension($file), $this->allowedFileExtensions)) {
             echo json_encode([
@@ -67,7 +67,7 @@ class Validator
      *
      * @return string
      */
-    public function allowedFilesTypes ()
+    private function allowedFilesTypes ()
     {
         return implode(', ', $this->allowedFileExtensions);
     }
@@ -78,7 +78,7 @@ class Validator
      * @param array $file
      * @return void
      */
-    public function getFileExtension ($file)
+    private function getFileExtension ($file)
     {
         return pathinfo($file["name"], PATHINFO_EXTENSION);
     }
