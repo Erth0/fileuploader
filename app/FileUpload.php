@@ -21,10 +21,18 @@ class FileUpload extends Connection
      */
     protected $validator;
 
+    /**
+     * Configurations
+     *
+     * @var array
+     */
+    protected $configurations;
+
     public function __construct($file, $configurations)
     {
         $this->file = $file;
         $this->validator = new Validator($configurations['allowed-files'], $configurations['allowed-file-size']);
+        $this->configurations = $configurations;
         parent::__construct($configurations['database']);
         $this->uploadFile();
     }
@@ -63,7 +71,20 @@ class FileUpload extends Connection
      */
     private function insertFileIntoDatabase ($fileName)
     {
+        $fileName = $this->getFileFullPath($fileName);
+        // var_dump($fileName);die();
         $result = $this->query("INSERT INTO images(file_path, created_at, updated_at) VALUES('$fileName', NOW(), NOW())");
+    }
+
+    /**
+     * Returns the file full path
+     *
+     * @param string $fileName
+     * @return string
+     */
+    private function getFileFullPath($fileName)
+    {
+        return str_replace('\\', '/', $this->configurations['root_path']) . 'tmp_files/' . $fileName;
     }
 
     /**
