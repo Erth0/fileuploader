@@ -72,7 +72,6 @@ class FileUpload extends Connection
     private function insertFileIntoDatabase ($fileName)
     {
         $fileName = $this->getFileFullPath($fileName);
-        // var_dump($fileName);die();
         $result = $this->query("INSERT INTO images(file_path, created_at, updated_at) VALUES('$fileName', NOW(), NOW())");
     }
 
